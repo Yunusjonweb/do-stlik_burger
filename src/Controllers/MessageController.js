@@ -88,6 +88,8 @@ module.exports = async function (bot, message, user) {
       await checkController(bot, message, user);
     } else if (user.step == "verLocation") {
       await verLocationController(bot, message, user);
+    } else if (user.step == 6 && text == "📍 Manzilni o'zgartirish") {
+      await reqLocationController(bot, message, user);
     }
   } catch (e) {
     console.log(e);

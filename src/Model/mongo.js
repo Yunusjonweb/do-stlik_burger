@@ -4,6 +4,8 @@ const { MONGO_URL } = require("../../config");
 // import models ...
 require("./Users");
 require("./Comments");
+require("./Categories");
+require("./Admins");
 
 module.exports = async function () {
   try {

@@ -10,6 +10,7 @@ const LangSave = require("./Controllers/LangSave");
 const CityController = require("./Controllers/CityController");
 const CityChange = require("./Controllers/CityChange");
 const PhoneController = require("./Controllers/PhoneController");
+const admin = require("./Admin/admin");
 
 const bot = new TelegramBot(TOKEN, {
   polling: true,
@@ -71,3 +72,7 @@ bot.on("callback_query", async (message) => {
     }
   }
 });
+
+(async () => {
+  admin();
+})();

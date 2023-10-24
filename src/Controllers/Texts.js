@@ -281,4 +281,44 @@ module.exports = class Texts {
       };
     }
   }
+
+  static startOrderMenu(lang) {
+    if (lang == "uz") {
+      return {
+        text: "Quydagilardan birini tanlang",
+        btns: {
+          change_location: "📍 Manzilni o'zgartirish",
+          menu: "🍽 Menu",
+          orders: "🛍 Buyurtmalarim",
+          vacancy: "👪 EVOS Oilasi",
+          comment: "✍️ Fikr bildirish",
+          settings: "⚙️ Sozlamalar",
+        },
+      };
+    } else if (lang == "ru") {
+      return {
+        text: "Выберите один из следующих вариантов",
+        btns: {
+          change_location: "📍 Изменить адрес",
+          menu: "🍽 Меню",
+          orders: "🛍 Мои заказы",
+          vacancy: "👪 Семья ЭВОС",
+          comment: "♦ Комментарий",
+          settings: "⚙ ️ Настройки",
+        },
+      };
+    } else if (lang == "eng") {
+      return {
+        text: "Choose one of those below",
+        btns: {
+          change_location: "📍 Change address",
+          menu: "🍽 Menu",
+          orders: "🛍 My orders",
+          vacancy: "👪 EVOS family",
+          comment: "✍️ Feedback",
+          settings: "⚙️ Settings",
+        },
+      };
+    }
+  }
 };
