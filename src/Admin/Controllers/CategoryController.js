@@ -3,13 +3,17 @@ const categories = require("../../Model/Categories");
 
 module.exports = async function (bot, message, admin, category_id) {
   try {
+    console.log(category_id);
     const userId = message.from.id;
+    const text = message.text;
     let categoryList = [];
 
     if (category_id) {
       categoryList = await categories.find({ category_id: category_id });
     } else {
-      categoryList = await categories.find();
+      categoryList = await categories.find({
+        category_id: { $eq: null },
+      });
     }
 
     let keyboard = {
@@ -43,16 +47,20 @@ module.exports = async function (bot, message, admin, category_id) {
       });
     }
 
-    if (categoryList.length) {
-      await bot.sendMessage(userId, `Quydagi kategoriyalardan birini tanlang`, {
-        reply_markup: keyboard,
-      });
+    if (categoryList.length > 0) {
+      await bot.sendMessage(
+        userId,
+        `Quydagi kategoriyalardan birini tanlang!`,
+        {
+          reply_markup: keyboard,
+        }
+      );
     } else {
-      await bot.sendMessage(userId, `❗️ Ma'\lumot topilmadi`, {
+      await bot.sendMessage(userId, `Malumot topilmadi`, {
         reply_markup: keyboard,
       });
     }
-  } catch (err) {
+  } catch (error) {
     console.log(err + "");
   }
 };

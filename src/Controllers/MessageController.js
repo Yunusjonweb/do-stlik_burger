@@ -1,7 +1,10 @@
+const ad = require("../Admin/ad");
+const admins = require("../Model/Admins");
 const users = require("../Model/Users");
 const checkController = require("./checkController");
 const CommentController = require("./CommentController");
 const CommentSave = require("./CommentSave");
+const Menu = require("./Menu");
 const MenuController = require("./MenuController");
 const reqLocationController = require("./reqLocationController");
 const SettingsController = require("./SettingsController");
@@ -13,6 +16,23 @@ module.exports = async function (bot, message, user) {
     const userId = message.from.id;
     const text = message.text;
     const messageId = message.message_id;
+
+    if (text == "/post") {
+      if (message.reply_to_message) {
+        let admin = await admins.findOne({
+          user_id: user.user_id,
+        });
+
+        if (admin) {
+          await ad(
+            bot,
+            message.reply_to_message.message_id,
+            user.user_id,
+            message.reply_to_message.reply_markup
+          );
+        }
+      }
+    }
 
     if (
       (text == "✍️ Fikr bildirish" ||
@@ -90,6 +110,12 @@ module.exports = async function (bot, message, user) {
       await verLocationController(bot, message, user);
     } else if (user.step == 6 && text == "📍 Manzilni o'zgartirish") {
       await reqLocationController(bot, message, user);
+    } else if (
+      (user.step == 6 && text == "🍽 Menu") ||
+      text == "🍽 Меню" ||
+      text == "Menu"
+    ) {
+      await Menu(bot, message, user);
     }
   } catch (e) {
     console.log(e);

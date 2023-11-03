@@ -1,6 +1,7 @@
 const admins = require("../../Model/Admins");
+const products = require("../../Model/Product");
 
-module.exports = async function (bot, message, admin, categoryId) {
+module.exports = async function (bot, message, admin, productId) {
   try {
     const userId = message.from.id;
     const text = message.text;
@@ -9,11 +10,20 @@ module.exports = async function (bot, message, admin, categoryId) {
         user_id: userId,
       },
       {
-        step: `addCategory#${categoryId}`,
+        step: `addProduct#${productId}#price`,
       }
     );
 
-    await bot.sendMessage(userId, `Kategoriya nomni kiriting`, {
+    await products.findOneAndUpdate(
+      {
+        id: productId,
+      },
+      {
+        name: message.text,
+      }
+    );
+
+    await bot.sendMessage(userId, `<b>${text}</b>'ni narxi qancha?`, {
       reply_markup: {
         resize_keyboard: true,
         keyboard: [
@@ -24,6 +34,7 @@ module.exports = async function (bot, message, admin, categoryId) {
           ],
         ],
       },
+      parse_mode: "HTML",
     });
   } catch (err) {
     console.log(err + "");

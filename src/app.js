@@ -74,5 +74,5 @@ bot.on("callback_query", async (message) => {
 });
 
 (async () => {
-  admin();
+  admin(bot);
 })();

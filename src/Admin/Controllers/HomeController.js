@@ -4,7 +4,6 @@ module.exports = async function (bot, message, admin) {
   try {
     const userId = message.from.id;
     const text = message.text;
-
     await admins.findOneAndUpdate(
       {
         user_id: userId,
@@ -22,13 +21,18 @@ module.exports = async function (bot, message, admin) {
             text: "➕ Kategoriyalar",
           },
           {
-            text: "🧺 Maxsulot qo'shish",
+            text: "🧺 Maxsulotlar",
+          },
+        ],
+        [
+          {
+            text: "👤 Foydalanuvchilari sonni",
           },
         ],
       ],
     };
 
-    await bot.sendMessage(userId, `Quydagilardan birini tanlang`, {
+    await bot.sendMessage(userId, `Quydagilardan birni tanlang!`, {
       reply_markup: keyboard,
     });
   } catch (err) {

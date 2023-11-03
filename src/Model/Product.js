@@ -5,7 +5,6 @@ const ProductSchema = new mongoose.Schema({
   id: {
     type: String,
     required: true,
-    default: v4(),
   },
   name: {
     type: String,
@@ -21,7 +20,6 @@ const ProductSchema = new mongoose.Schema({
   },
   category_id: {
     type: String,
-    required: true,
   },
 });
 

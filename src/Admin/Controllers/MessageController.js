@@ -1,9 +1,21 @@
 const admins = require("../../Model/Admins");
+const users = require("../../Model/Users");
 const categories = require("../../Model/Categories");
 const AddCategory = require("./AddCategory");
+const AddProduct = require("./AddProduct");
 const CategoryController = require("./CategoryController");
+const DeleteProduct = require("./DeleteProduct");
 const HomeController = require("./HomeController");
+const ProductAdd = require("./ProductAdd");
+const ProductCategory = require("./ProductCategory");
+const ProductCategoryBack = require("./ProductCategoryBack");
+const ProductImg = require("./ProductImg");
+const ProductSaveController = require("./ProductSaveController");
+const ProductUpdateDescription = require("./ProductUpdateDescription");
+const ProductUpdateImg = require("./ProductUpdateImg");
+const ProductUpdateName = require("./ProductUpdateName");
 const SaveCategory = require("./SaveCategory");
+const UsersCount = require("./UsersCount");
 
 module.exports = async function (bot, message, admin) {
   try {
@@ -12,7 +24,7 @@ module.exports = async function (bot, message, admin) {
 
     if (text == "/start" && admin.step == 0) {
       await HomeController(bot, message, admin);
-    } else if (text == "➕ Kategoriyalar") {
+    } else if (admin.step == "0" && text == "➕ Kategoriyalar") {
       await admins.findOneAndUpdate(
         {
           user_id: userId,
@@ -21,7 +33,7 @@ module.exports = async function (bot, message, admin) {
           step: `categories#all`,
         }
       );
-       await CategoryController(bot, message, admin);
+      await CategoryController(bot, message, admin);
     } else if (admin.step?.split("#")[0] == "categories") {
       if (text == "➕ Qo'shish") {
         let categoryId =
@@ -46,7 +58,7 @@ module.exports = async function (bot, message, admin) {
           );
 
           await HomeController(bot, message, admin);
-          await CategoryController(bot, message, admin, category.category.id);
+          await CategoryController(bot, message, admin, category.id);
           return;
         }
         await admins.findOneAndUpdate(
@@ -101,6 +113,46 @@ module.exports = async function (bot, message, admin) {
           ? undefined
           : admin.step?.split("#")[1];
       await SaveCategory(bot, message, admin, categoryId);
+    } else if (admin.step == "0" && text == "🧺 Maxsulotlar") {
+      await admins.findOneAndUpdate(
+        {
+          user_id: userId,
+        },
+        {
+          step: `product#categories#all`,
+        }
+      );
+      await ProductAdd(bot, message, admin);
+    } else if (admin.step?.split("#")[0] == "product") {
+      if (text == "➕ Qo'shish") {
+        let step = admin.step.split("#")[2];
+        step = step == "all" ? undefined : step;
+        await AddProduct(bot, message, admin, step);
+      } else if (text == "⬅️ Ortga") {
+        await ProductCategoryBack(bot, message, admin);
+      } else {
+        await ProductCategory(bot, message, admin);
+      }
+    } else if (admin.step?.split("#")[0] == "addProduct") {
+      let productId = admin.step.split("#")[1];
+      let step = admin.step.split("#")[2];
+
+      if (text == "⬅️ Ortga") {
+        let productId = admin.step.split("#")[1];
+        await DeleteProduct(bot, message, admin, productId);
+      } else if (step == "name") {
+        await ProductUpdateName(bot, message, admin, productId);
+      } else if (step == "price") {
+        await ProductUpdateDescription(bot, message, admin, productId);
+      } else if (step == "des") {
+        await ProductUpdateImg(bot, message, admin, productId);
+      } else if (step == "pic" && message.photo) {
+        await ProductImg(bot, message, admin, productId);
+      } else if (step == "done" && text == "Saqlash") {
+        await ProductSaveController(bot, message, admin);
+      }
+    } else if (admin.step == "0" && text == "👤 Foydalanuvchilari sonni") {
+      await UsersCount(bot, message, admin);
     }
   } catch (err) {
     console.log(err + "");

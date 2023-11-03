@@ -74,7 +74,7 @@ module.exports = class Texts {
         keyboard: {
           order: "🛒 Buyurtma qilish",
           orders: "🛍 Buyurtmalarim",
-          vacancy: "👪 EVOS Oilasi",
+          vacancy: "👪 Bosh ish o'rni",
           comment: "✍️ Fikr bildirish",
           settings: "⚙️ Sozlamalar",
         },
@@ -85,7 +85,7 @@ module.exports = class Texts {
         keyboard: {
           order: "🛒 Заказать",
           orders: "🛍 Мои заказы",
-          vacancy: "👪 Семья EVOS",
+          vacancy: "👪 Главная работа",
           comment: "✍️ Обратная связь",
           settings: "⚙️ Настройки",
         },
@@ -96,7 +96,7 @@ module.exports = class Texts {
         keyboard: {
           order: "🛒 Order",
           orders: "🛍 My Orders",
-          vacancy: "👪 Family EVOS",
+          vacancy: "👪 Head job",
           comment: "✍️ Leave comment",
           settings: "⚙️ Settings",
         },
@@ -290,7 +290,7 @@ module.exports = class Texts {
           change_location: "📍 Manzilni o'zgartirish",
           menu: "🍽 Menu",
           orders: "🛍 Buyurtmalarim",
-          vacancy: "👪 EVOS Oilasi",
+          vacancy: "👪 Bosh ish o'rni",
           comment: "✍️ Fikr bildirish",
           settings: "⚙️ Sozlamalar",
         },
@@ -302,7 +302,7 @@ module.exports = class Texts {
           change_location: "📍 Изменить адрес",
           menu: "🍽 Меню",
           orders: "🛍 Мои заказы",
-          vacancy: "👪 Семья ЭВОС",
+          vacancy: "👪 Главная работа",
           comment: "♦ Комментарий",
           settings: "⚙ ️ Настройки",
         },
@@ -314,11 +314,22 @@ module.exports = class Texts {
           change_location: "📍 Change address",
           menu: "🍽 Menu",
           orders: "🛍 My orders",
-          vacancy: "👪 EVOS family",
+          vacancy: "👪 Head job",
           comment: "✍️ Feedback",
           settings: "⚙️ Settings",
         },
       };
+    }
+  }
+  static Menu(lang) {
+    if (lang == "uz") {
+      return "Kategoriyalardan birini tanlang";
+    }
+    if (lang == "ru") {
+      return "Выберите одну из категорий";
+    }
+    if (lang == "eng") {
+      return "Choose one of the categories";
     }
   }
 };
