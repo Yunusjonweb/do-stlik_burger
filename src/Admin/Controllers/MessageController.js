@@ -146,7 +146,7 @@ module.exports = async function (bot, message, admin) {
         await ProductUpdateDescription(bot, message, admin, productId);
       } else if (step == "des") {
         await ProductUpdateImg(bot, message, admin, productId);
-      } else if (step == "pic" && message.photo) {
+      } else if (step == "pic") {
         await ProductImg(bot, message, admin, productId);
       } else if (step == "done" && text == "Saqlash") {
         await ProductSaveController(bot, message, admin);

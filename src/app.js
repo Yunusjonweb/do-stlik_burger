@@ -11,6 +11,8 @@ const CityController = require("./Controllers/CityController");
 const CityChange = require("./Controllers/CityChange");
 const PhoneController = require("./Controllers/PhoneController");
 const admin = require("./Admin/admin");
+const Menu = require("./Controllers/Menu");
+const CallbackController = require("./Admin/Controllers/CallbackController");
 
 const bot = new TelegramBot(TOKEN, {
   polling: true,
@@ -24,6 +26,23 @@ bot.on("message", async (message) => {
   let user = await users.findOne({
     user_id: userId,
   });
+
+  if (message.text == "/id") {
+    let admin = await users.findOne({
+      user_id: userId,
+    });
+    if (admin) {
+      if (message.reply_to_message) {
+        if (message.reply_to_message.photo[0].file_id) {
+          await bot.sendMessage(
+            userId,
+            message.reply_to_message.photo[0].file_id
+          );
+        }
+      }
+    }
+  }
+
   if (!user || (Number(user.step) && Number(user.step) < 5)) {
     await SignUp(bot, message, user);
   } else {
@@ -71,6 +90,11 @@ bot.on("callback_query", async (message) => {
       await MenuController(bot, message, user);
     }
   }
+
+  if (data == "menu") {
+    await Menu(bot, message, user);
+  }
+  await CallbackController(bot, message, user);
 });
 
 (async () => {

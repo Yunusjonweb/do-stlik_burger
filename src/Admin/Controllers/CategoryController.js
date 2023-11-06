@@ -3,7 +3,6 @@ const categories = require("../../Model/Categories");
 
 module.exports = async function (bot, message, admin, category_id) {
   try {
-    console.log(category_id);
     const userId = message.from.id;
     const text = message.text;
     let categoryList = [];

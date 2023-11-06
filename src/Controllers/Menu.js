@@ -5,15 +5,19 @@ const { Menu } = require("./Texts");
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    let categoryList = await categories.find();
-    let productList = await products.find({});
+    let categoryList = await categories.find({
+      category_id: null,
+    });
+    let productList = await products.find({
+      category_id: null,
+    });
 
     let keyboard = {
       inline_keyboard: [
         [
           {
             text: "Barcha menyular",
-            url: "http://google.com/",
+            url: "https://telegra.ph/Dostlik-Burger-11-03",
           },
         ],
       ],

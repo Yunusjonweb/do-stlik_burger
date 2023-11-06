@@ -1,5 +1,4 @@
 const users = require("../Model/Users");
-const MenuController = require("./MenuController");
 const { verLocation } = require("./Texts");
 
 module.exports = async function (bot, message, user) {

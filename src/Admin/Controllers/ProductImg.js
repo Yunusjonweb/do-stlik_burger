@@ -18,7 +18,7 @@ module.exports = async function (bot, message, admin, productId) {
         id: productId,
       },
       {
-        pic: message.photo[message.photo.length - 1].file_id,
+        pic: message.text,
       }
     );
 
@@ -26,23 +26,26 @@ module.exports = async function (bot, message, admin, productId) {
       id: productId,
     });
 
-    await bot.sendPhoto(userId, product.pic, {
-      caption: `<b>Maxsulot nomi: </b> ${product.name}\n<b>Maxsulot narxi: </b> ${product.price} so'm\n<b>Maxsulot haqida malumot: </b> ${product.description}\n`,
-      reply_markup: {
-        resize_keyboard: true,
-        keyboard: [
-          [
-            {
-              text: "Saqlash",
-            },
-            {
-              text: "⬅️ Ortga",
-            },
+    await bot.sendMessage(
+      userId,
+      `<b>Maxsulot nomi: </b> ${product.name}\n<b>Maxsulot narxi: </b> ${product.price} so'm\n<b>Maxsulot haqida malumot: </b> ${product.description}\n<b>Rasim:</b>${product.pic}`,
+      {
+        reply_markup: {
+          resize_keyboard: true,
+          keyboard: [
+            [
+              {
+                text: "Saqlash",
+              },
+              {
+                text: "⬅️ Ortga",
+              },
+            ],
           ],
-        ],
-      },
-      parse_mode: "HTML",
-    });
+        },
+        parse_mode: "HTML",
+      }
+    );
   } catch (err) {
     console.log(err + "");
   }
