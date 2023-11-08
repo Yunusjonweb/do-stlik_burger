@@ -1,14 +1,13 @@
-const categories = require("../Model/Categories");
 const products = require("../Model/Product");
 const users = require("../Model/Users");
+const ProductBasket = require("./ProductBasket");
+
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
     const channelId = -1002145163406;
     const messageId = message.message.message_id;
     const data = message.data;
-
-    console.log(data, "888888");
 
     let type = data.split("#")[0];
     let id = data.split("#")[1];
@@ -23,7 +22,7 @@ module.exports = async function (bot, message, user) {
 
     await bot.deleteMessage(userId, messageId);
 
-    let productCaption = `Narxi: <b>${product.price} so'm</b>\nTarkibi: ${product.description}\nMiqdorini tanlang`;
+    let productCaption = `💰 Narxi: <b>${product.price} so'm</b>\n✍️ Tarkibi: ${product.description}\n🔄 Miqdorini tanlang`;
 
     let keyboard = {
       inline_keyboard: [],
@@ -33,15 +32,15 @@ module.exports = async function (bot, message, user) {
       keyboard.inline_keyboard.push([
         {
           text: i,
-          callback_data: `count#${product.id}`,
+          callback_data: `count#${product.id}#${i}`,
         },
         {
           text: i + 1,
-          callback_data: `count#${product.id}`,
+          callback_data: `count#${product.id}#${i + 1}`,
         },
         {
           text: i + 2,
-          callback_data: `count#${product.id}`,
+          callback_data: `count#${product.id}#${i + 2}`,
         },
       ]);
     }
@@ -74,9 +73,9 @@ module.exports = async function (bot, message, user) {
     );
 
     await bot.sendPhoto(userId, product.pic, {
-      cation: productCaption,
       parse_mode: "HTML",
       reply_markup: keyboard,
+      caption: productCaption,
     });
   } catch (err) {
     console.log(err + "");

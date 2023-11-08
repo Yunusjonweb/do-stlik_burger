@@ -13,6 +13,7 @@ const PhoneController = require("./Controllers/PhoneController");
 const admin = require("./Admin/admin");
 const Menu = require("./Controllers/Menu");
 const CallbackController = require("./Admin/Controllers/CallbackController");
+const MenuProduct = require("./Controllers/MenuProduct");
 
 const bot = new TelegramBot(TOKEN, {
   polling: true,
@@ -94,6 +95,9 @@ bot.on("callback_query", async (message) => {
   if (data == "menu") {
     await Menu(bot, message, user);
   }
+
+  
+
   await CallbackController(bot, message, user);
 });
 

@@ -6,6 +6,7 @@ const CommentController = require("./CommentController");
 const CommentSave = require("./CommentSave");
 const Menu = require("./Menu");
 const MenuController = require("./MenuController");
+const ProductBasket = require("./ProductBasket");
 const reqLocationController = require("./reqLocationController");
 const SettingsController = require("./SettingsController");
 const { reqPhone, reqCode } = require("./Texts");
@@ -118,6 +119,6 @@ module.exports = async function (bot, message, user) {
       await Menu(bot, message, user);
     }
   } catch (e) {
-    console.log(e);
+    console.log(e + "");
   }
 };

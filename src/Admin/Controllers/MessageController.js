@@ -1,5 +1,4 @@
 const admins = require("../../Model/Admins");
-const users = require("../../Model/Users");
 const categories = require("../../Model/Categories");
 const AddCategory = require("./AddCategory");
 const AddProduct = require("./AddProduct");
