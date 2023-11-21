@@ -13,7 +13,7 @@ const PhoneController = require("./Controllers/PhoneController");
 const admin = require("./Admin/admin");
 const Menu = require("./Controllers/Menu");
 const CallbackController = require("./Admin/Controllers/CallbackController");
-const MenuProduct = require("./Controllers/MenuProduct");
+const AttributionController = require("./Controllers/AttributionController");
 
 const bot = new TelegramBot(TOKEN, {
   polling: true,
@@ -56,51 +56,38 @@ bot.on("callback_query", async (message) => {
   const userId = message.from.id;
   const data = message.data;
 
-  let user = await users.findOne({
-    user_id: userId,
-  });
+  let user = await users.findOne({ user_id: userId });
 
-  if (data == "lang") {
+  if (data === "lang") {
     LangController(bot, message, user);
-  } else {
-    if (user.step == "lang") {
-      await LangSave(bot, message, user);
-    }
+  } else if (user.step === "lang") {
+    await LangSave(bot, message, user);
   }
 
-  if (data == "city") {
+  if (data === "city") {
     await CityController(bot, message, user);
-  } else {
-    if (user.step == "city") {
-      await CityChange(bot, message, user);
-    }
+  } else if (user.step === "city") {
+    await CityChange(bot, message, user);
   }
 
-  if (data == "phone") {
+  if (data === "phone") {
     await PhoneController(bot, message, user);
-  } else if (user.step == "phone_code") {
-    if (text == user.code) {
-      await users.findOneAndUpdate(
-        {
-          user_id: userId,
-        },
-        {
-          step: 5,
-        }
-      );
-      await MenuController(bot, message, user);
-    }
+  } else if (user.step === "phone_code" && message.text === user.code) {
+    await users.findOneAndUpdate({ user_id: userId }, { step: 5 });
+    await MenuController(bot, message, user);
   }
 
-  if (data == "menu") {
+  if (data === "menu") {
     await Menu(bot, message, user);
   }
 
-  
+  if (data === "attribution") {
+    await AttributionController(bot, message, user);
+  }
 
   await CallbackController(bot, message, user);
 });
 
 (async () => {
-  admin(bot);
+  admin();
 })();

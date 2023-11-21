@@ -5,11 +5,12 @@ const products = require("../../Model/Product");
 module.exports = async function (bot, message, admin, categoryId) {
   try {
     const userId = message.from.id;
-    const text = message.text;
-    let product = await products.create({
+
+    const product = await products.create({
       id: v4(),
-      category_id: categoryId != "undefined" ? categoryId : undefined,
+      category_id: categoryId !== "undefined" ? categoryId : undefined,
     });
+
     await admins.findOneAndUpdate(
       {
         user_id: userId,
@@ -18,7 +19,8 @@ module.exports = async function (bot, message, admin, categoryId) {
         step: `addProduct#${product.id}#name`,
       }
     );
-    await bot.sendMessage(userId, `Mahsulot nomini kiriting`, {
+
+    await bot.sendMessage(userId, "Mahsulot nomini kiriting", {
       reply_markup: {
         resize_keyboard: true,
         keyboard: [

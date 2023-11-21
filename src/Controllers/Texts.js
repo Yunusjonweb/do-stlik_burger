@@ -125,18 +125,18 @@ module.exports = class Texts {
 
   static CommentSaved(lang) {
     if (lang == "uz") {
-      return "Fikr va mulohazalaringiz uchun rahmat";
+      return "✅ Fikr va mulohazalaringiz uchun rahmat";
     } else if (lang == "ru") {
-      return "Спасибо за ваш отзыв и отзыв";
+      return "✅ Спасибо за ваш отзыв и отзыв";
     } else if (lang == "eng") {
-      return "Thanks for your comments";
+      return "✅ Thanks for your comments";
     }
   }
 
   static Settings(user) {
     if (user.lang == "uz") {
       return {
-        text: `<b>Muloqot tili:</b> 🇺🇿 O'zbekcha\n<b>Shahar:</b> ${user.city}\n<b>Telefon:</b> ${user.phone_number}\n\nQuyidagilardan birini tanlang`,
+        text: `<b>Muloqot tili:</b> 🇺🇿 O'zbekcha\n<b>Shahar:</b> ${user?.city}\n<b>Telefon:</b> +${user?.phone_number}\n\nQuyidagilardan birini tanlang`,
         btns: {
           lang: "Muloqot tili",
           city: "Shahar",
@@ -145,7 +145,7 @@ module.exports = class Texts {
       };
     } else if (user.lang == "ru") {
       return {
-        text: `<b>Язык общения:</b> 🇷🇺 Русский\n<b>Город:</b> ${user.city}\n<b>Телефон:</b> ${user.phone_number}\n\nВыберите один из следующих`,
+        text: `<b>Язык общения:</b> 🇷🇺 Русский\n<b>Город:</b> ${user.city}\n<b>Телефон:</b> +${user.phone_number}\n\nВыберите один из следующих`,
         btns: {
           lang: "Язык общения",
           city: "Город",
@@ -154,7 +154,7 @@ module.exports = class Texts {
       };
     } else if (user.lang == "eng") {
       return {
-        text: `<b>Language:</b> 🇬🇧 English\n<b>City:</b> ${user.city}\n<b>Phone:</b> ${user.phone_number}\n\nChoose one of the following`,
+        text: `<b>Language:</b> 🇬🇧 English\n<b>City:</b> ${user.city}\n<b>Phone:</b> +${user.phone_number}\n\nChoose one of the following`,
         btns: {
           lang: "Language",
           city: "City",
@@ -282,6 +282,35 @@ module.exports = class Texts {
     }
   }
 
+  static verAttribution(lang) {
+    if (lang == "uz") {
+      return {
+        text: "Ushbu maxsulotlar haqiqatan yuborilsinmi ?",
+        btns: {
+          yes: "✅ Ha",
+          no: "❌ Yo'q",
+        },
+      };
+    } else if (lang == "ru") {
+      return {
+        text: "Действительно ли эти продукты отправляются ?",
+        btns: {
+          yes: "✅ Да",
+          no: "❌ Нет",
+        },
+      };
+    }
+    if (lang == "eng") {
+      return {
+        text: "Are these products really sent ?",
+        btns: {
+          yes: "✅ Yes",
+          no: "❌ No",
+        },
+      };
+    }
+  }
+
   static startOrderMenu(lang) {
     if (lang == "uz") {
       return {
@@ -330,6 +359,27 @@ module.exports = class Texts {
     }
     if (lang == "eng") {
       return "Choose one of the categories";
+    }
+  }
+
+  static vacancyStart(lang) {
+    if (lang == "uz") {
+      return {
+        text: "Ish joyi topish uchun ariza berish\nHozir sizga birnecha savollar beriladi. Har biriga javob bering. Oxirida agar hammasi to`g`ri bo`lsa, HA tugmasini bosing va arizangiz Adminga yuboriladi.",
+        btn: "⬅️ Ortga",
+      };
+    }
+    if (lang == "ru") {
+      return {
+        text: "Подача заявки на работу\n теперь вам будет задано несколько вопросов. Ответьте на каждый. В конце, если все правильно, нажмите да, и ваше приложение будет отправлено администратору.",
+        btn: "⬅️ Назад",
+      };
+    }
+    if (lang == "eng") {
+      return {
+        text: "Applying to find a job\n You will now be asked some questions. Answer each one. At the end, if everything is right, click yes and your application will be sent to Admin.",
+        btn: "⬅️ Back",
+      };
     }
   }
 };

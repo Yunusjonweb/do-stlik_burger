@@ -3,7 +3,7 @@ const admins = require("../../Model/Admins");
 module.exports = async function (bot, message, admin, categoryId) {
   try {
     const userId = message.from.id;
-    const text = message.text;
+
     await admins.findOneAndUpdate(
       {
         user_id: userId,
@@ -13,7 +13,7 @@ module.exports = async function (bot, message, admin, categoryId) {
       }
     );
 
-    await bot.sendMessage(userId, `Kategoriya nomni kiriting`, {
+    await bot.sendMessage(userId, "Kategoriya nomni kiriting", {
       reply_markup: {
         resize_keyboard: true,
         keyboard: [
@@ -26,6 +26,6 @@ module.exports = async function (bot, message, admin, categoryId) {
       },
     });
   } catch (err) {
-    console.log(err + "");
+    console.log(err.toString());
   }
 };

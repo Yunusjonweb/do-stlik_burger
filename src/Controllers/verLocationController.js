@@ -3,11 +3,11 @@ const reqLocationController = require("./reqLocationController");
 const startOrderController = require("./startOrderController");
 
 module.exports = async function (bot, message, user) {
-  try {
-    const userId = message.from.id;
-    const text = message.text;
+  const userId = message.from.id;
+  const text = message.text;
 
-    if (text == "✅ Ha" || text == "✅ Да" || text == "✅ Yes") {
+  try {
+    if (["✅ Ha", "✅ Да", "✅ Yes"].includes(text)) {
       await users.findOneAndUpdate(
         {
           user_id: userId,
@@ -17,7 +17,7 @@ module.exports = async function (bot, message, user) {
         }
       );
       await startOrderController(bot, message, user);
-    } else if (text == "❌ Yo'q" || text == "❌ Нет" || text == "❌ No") {
+    } else if (["❌ Yo'q", "❌ Нет", "❌ No"].includes(text)) {
       await users.findOneAndUpdate(
         {
           user_id: userId,
@@ -29,6 +29,6 @@ module.exports = async function (bot, message, user) {
       await reqLocationController(bot, message, user);
     }
   } catch (err) {
-    console.log(err + "");
+    console.log(err.toString());
   }
 };

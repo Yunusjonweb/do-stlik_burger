@@ -85,7 +85,6 @@ module.exports = async function (bot, message, admin) {
         await categories.deleteOne({
           id: stepId,
         });
-        // Sub categorys for delete function
         await categories.deleteMany({
           id: stepId,
         });

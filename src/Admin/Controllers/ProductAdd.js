@@ -1,12 +1,14 @@
 const categories = require("../../Model/Categories");
+const products = require("../../Model/Product");
 
 module.exports = async function (bot, message, admin, categoryId) {
   try {
     const userId = message.from.id;
+
     let categoryList = [];
     if (categoryId) {
       categoryList = await categories.find({
-        category_id: categoryId,
+        categoryId,
       });
     } else {
       categoryList = await categories.find();
@@ -45,6 +47,6 @@ module.exports = async function (bot, message, admin, categoryId) {
       }
     );
   } catch (error) {
-    console.log(err + "");
+    console.log(error + "");
   }
 };

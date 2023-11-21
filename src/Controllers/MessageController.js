@@ -1,22 +1,32 @@
 const ad = require("../Admin/ad");
 const admins = require("../Model/Admins");
 const users = require("../Model/Users");
+const vacancies = require("../Model/Vacancies");
 const checkController = require("./checkController");
 const CommentController = require("./CommentController");
 const CommentSave = require("./CommentSave");
+const DeleteVacancies = require("./DeleteVacancies");
 const Menu = require("./Menu");
 const MenuController = require("./MenuController");
-const ProductBasket = require("./ProductBasket");
+const OrdersController = require("./OrdersController");
 const reqLocationController = require("./reqLocationController");
 const SettingsController = require("./SettingsController");
 const { reqPhone, reqCode } = require("./Texts");
+const VacanciesController = require("./VacanciesController");
+const VacanciesSaveController = require("./VacanciesSaveController");
+const VacanciesUpdateAge = require("./VacanciesUpdateAge");
+const VacanciesUpdateCity = require("./VacanciesUpdateCity");
+const VacanciesUpdateDone = require("./VacanciesUpdateDone");
+const VacanciesUpdateGoal = require("./VacanciesUpdateGoal");
+const VacanciesUpdateName = require("./VacanciesUpdateName");
+const VacanciesUpdatePhone = require("./VacanciesUpdatePhone");
+const verAttributionController = require("./verAttributionController");
 const verLocationController = require("./verLocationController");
 
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
     const text = message.text;
-    const messageId = message.message_id;
 
     if (text == "/post") {
       if (message.reply_to_message) {
@@ -39,7 +49,7 @@ module.exports = async function (bot, message, user) {
       (text == "✍️ Fikr bildirish" ||
         text == "✍️ Обратная связь" ||
         text == "✍️ Leave comment") &&
-      (user.step == 5 || user.step == 6)
+      (user.step == 5 || user.step == 6 || user.step == 7)
     ) {
       await CommentController(bot, message, user);
     } else if (user.step == "comment") {
@@ -57,7 +67,7 @@ module.exports = async function (bot, message, user) {
         await CommentSave(bot, message, user);
       }
     } else if (
-      (user.step == 5 || user.step == 6) &&
+      (user.step == 5 || user.step == 6 || user.step == 7) &&
       (text == "⚙️ Sozlamalar" ||
         text == "⚙️ Настройки" ||
         text == "⚙️ Settings")
@@ -99,7 +109,7 @@ module.exports = async function (bot, message, user) {
         await MenuController(bot, message, user);
       }
     } else if (
-      (user.step == 5 || user.step == 6) &&
+      (user.step == 5 || user.step == 6 || user.step == 7) &&
       (text == "🛒 Buyurtma qilish" ||
         text == "🛒 Заказать" ||
         text == "🛒 Order")
@@ -117,6 +127,91 @@ module.exports = async function (bot, message, user) {
       text == "Menu"
     ) {
       await Menu(bot, message, user);
+    } else if (
+      (user.step == 5 || user.step == 6 || user.step == 7) &&
+      text == "🛍 Buyurtmalarim"
+    ) {
+      await OrdersController(bot, message, user);
+      // bot.onText(/countdown ([0-9]+)/, (msg, match) => {
+      //   let count = parseInt(match[1]);
+      //   bot
+      //     .sendMessage(userId, `⏳ ${count.toString()} minut`)
+      //     .then((sentMessage) => {
+      //       const messageId = sentMessage.message_id;
+
+      //       const countdownInterval = setInterval(() => {
+      //         if (count > 0) {
+      //           count--;
+      //           bot.editMessageText(`⏳ ${count.toString()} minut qoldi...`, {
+      //             chat_id: userId,
+      //             message_id: messageId,
+      //           });
+      //         } else {
+      //           clearInterval(countdownInterval);
+      //           bot.editMessageText("⌛️ Countdown finished!", {
+      //             chat_id: userId,
+      //             message_id: messageId,
+      //           });
+      //         }
+      //       }, 60000);
+      //     });
+      // });
+    } else if (user.step === "verAttribution") {
+      await verAttributionController(bot, message, user);
+    } else if (
+      ((user.step == 5 || user.step == 6 || user.step == 7) &&
+        text == "👪 Bosh ish o'rni") ||
+      text == "👪 Главная работа" ||
+      text == "👪 Head job"
+    ) {
+      await VacanciesController(bot, message, user);
+    }
+    if (text == "⬅️ Ortga" || text == "⬅️ Назад" || text == "⬅️ Back") {
+      let stepId = user.step.split("#")[1];
+      await vacancies.deleteOne({
+        id: stepId,
+      });
+      await users.findOneAndUpdate(
+        {
+          user_id: userId,
+        },
+        {
+          step: 5,
+        }
+      );
+      await MenuController(bot, message, user);
+    } else if (user?.step?.split("#")[0] == "addVacancy") {
+      let vacancyId = user.step.split("#")[1];
+      let step = user.step.split("#")[2];
+      if (text == "⬅️ Ortga" || text == "⬅️ Назад" || text == "⬅️ Back") {
+        let vacanciesId = user.step.split("#")[1];
+        await vacancies.deleteOne({
+          id: vacanciesId,
+        });
+        await users.findOneAndUpdate(
+          {
+            user_id: userId,
+          },
+          {
+            step: 5,
+          }
+        );
+        await DeleteVacancies(bot, message, user, vacanciesId);
+      } else if (step == "name") {
+        await VacanciesUpdateName(bot, message, user, vacancyId);
+      } else if (step == "age") {
+        await VacanciesUpdateAge(bot, message, user, vacancyId);
+      } else if (step == "city") {
+        await VacanciesUpdateCity(bot, message, user, vacancyId);
+      } else if (step == "phone") {
+        await VacanciesUpdatePhone(bot, message, user, vacancyId);
+      } else if (step == "vacany") {
+        await VacanciesUpdateGoal(bot, message, user, vacancyId);
+      } else if (step == "goal") {
+        await VacanciesUpdateDone(bot, message, user, vacancyId);
+      } else if (step == "done" && text == "Saqlash") {
+        await VacanciesSaveController(bot, message, user);
+      }
     }
   } catch (e) {
     console.log(e + "");

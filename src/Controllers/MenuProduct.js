@@ -1,3 +1,4 @@
+const categories = require("../Model/Categories");
 const products = require("../Model/Product");
 const users = require("../Model/Users");
 const ProductBasket = require("./ProductBasket");
@@ -5,26 +6,27 @@ const ProductBasket = require("./ProductBasket");
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    const channelId = -1002145163406;
     const messageId = message.message.message_id;
     const data = message.data;
 
-    let type = data.split("#")[0];
-    let id = data.split("#")[1];
+    const type = data.split("#")[0];
+    const id = data.split("#")[1];
 
-    if (type != "product") {
+    if (type !== "product") {
       return;
     }
 
-    let product = await products.findOne({
+    const product = await products.findOne({
       id,
     });
 
     await bot.deleteMessage(userId, messageId);
 
-    let productCaption = `💰 Narxi: <b>${product.price} so'm</b>\n✍️ Tarkibi: ${product.description}\n🔄 Miqdorini tanlang`;
+    const productCaption = `💰 Narxi: <b>${formatPrice(
+      product?.price
+    )}</b>\n✍️ Tarkibi: ${product?.description}\n🔄 Miqdorini tanlang`;
 
-    let keyboard = {
+    const keyboard = {
       inline_keyboard: [],
     };
 
@@ -45,20 +47,19 @@ module.exports = async function (bot, message, user) {
       ]);
     }
 
-    keyboard.inline_keyboard.push([
-      {
-        text: "⬅️ Ortga",
-        callback_data: `back#${product.id}`,
-      },
-      {
-        text: "🔝 Davom etish",
-        callback_data: `menu`,
-      },
-    ]);
+    const category = await categories.findOne({
+      id: product.category_id,
+    });
+
+    let backData = category.id ? `category#${category.id}` : `menu`;
 
     keyboard.inline_keyboard.push([
       {
-        text: "🛒 Savatcha",
+        text: "⬅️ Ortga",
+        callback_data: backData,
+      },
+      {
+        text: "🔝 Davom etish",
         callback_data: `menu`,
       },
     ]);
@@ -81,3 +82,8 @@ module.exports = async function (bot, message, user) {
     console.log(err + "");
   }
 };
+
+function formatPrice(price) {
+  const formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return formattedPrice + " so'm";
+}

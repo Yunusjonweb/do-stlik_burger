@@ -6,6 +6,8 @@ require("./Users");
 require("./Comments");
 require("./Categories");
 require("./Admins");
+require("./Vacancies");
+require("./Orders");
 
 module.exports = async function () {
   try {

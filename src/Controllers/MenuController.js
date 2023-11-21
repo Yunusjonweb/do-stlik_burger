@@ -6,9 +6,9 @@ module.exports = async function (bot, message, user) {
     const messageId = message?.message_id;
     const text = message?.text;
 
-    let menuMsg = MenuMsg(user.lang);
+    const menuMsg = MenuMsg(user.lang); 
 
-    let keyboard = {
+    const keyboard = {
       resize_keyboard: true,
       keyboard: [
         [
@@ -38,6 +38,6 @@ module.exports = async function (bot, message, user) {
       reply_markup: keyboard,
     });
   } catch (err) {
-    console.log(err + "");
+    console.log(err.toString());
   }
 };

@@ -8,24 +8,17 @@ module.exports = async function (bot, message, user) {
     const data = message.data;
     const messageId = message.message.message_id;
 
-    await users.findOneAndUpdate(
-      {
-        user_id: userId,
-      },
-      {
-        lang: data,
-        step: 5,
-      }
-    );
+    await users.findOneAndUpdate({ user_id: userId }, { lang: data, step: 5 });
 
     user.lang = data;
-    let msg = LangChange(data);
+    const msg = LangChange(data);
 
-    await bot.deleteMessage(userId, messageId);
-    await bot.sendMessage(userId, msg);
-    await MenuController(bot, message, user);
+    await Promise.all([
+      bot.deleteMessage(userId, messageId),
+      bot.sendMessage(userId, msg),
+      MenuController(bot, message, user),
+    ]);
   } catch (err) {
-    await MenuController(bot, message, user);
-    console.log(err + "");
+    console.log(err.toString());
   }
 };
