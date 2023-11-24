@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   user_id: {
     type: String,
-    required: true,
-    unique: true,
   },
   phone_number: {
     type: Number,
@@ -21,7 +19,6 @@ const UserSchema = new mongoose.Schema({
   step: {
     type: String,
     default: 0,
-    required: true,
   },
   longitude: {
     type: String,

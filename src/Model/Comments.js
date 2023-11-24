@@ -14,6 +14,9 @@ const CommentSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  created_at: {
+    type: String,
+  },
 });
 
 const comments = mongoose.model("comments", CommentSchema);

@@ -1,15 +1,9 @@
-const users = require("../Model/Users");
-const vacancies = require("../Model/Vacancies");
-const MenuController = require("./MenuController");
+const users = require("../../Model/Users");
+const MenuController = require("../Order/MenuController");
 
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    const vacanciesId = user.step.split("#")[1];
-
-    const vacancy = await vacancies.findOne({
-      id: vacanciesId,
-    });
 
     await users.findOneAndUpdate(
       {
@@ -27,6 +21,6 @@ module.exports = async function (bot, message, user) {
 
     await MenuController(bot, message, user);
   } catch (err) {
-    console.log(err.toString());
+    console.log(err + "");
   }
 };

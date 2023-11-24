@@ -1,6 +1,6 @@
-const orders = require("../Model/Orders");
-const products = require("../Model/Product");
-const users = require("../Model/Users");
+const orders = require("../../Model/Orders");
+const products = require("../../Model/Product");
+const users = require("../../Model/Users");
 
 module.exports = async function (bot, message, user) {
   try {

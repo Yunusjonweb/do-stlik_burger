@@ -1,6 +1,6 @@
-const users = require("../Model/Users");
-const MenuController = require("./MenuController");
-const { LangChange } = require("./Texts");
+const users = require("../../Model/Users");
+const MenuController = require("../Order/MenuController");
+const { LangChange } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {

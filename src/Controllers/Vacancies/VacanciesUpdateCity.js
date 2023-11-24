@@ -1,5 +1,5 @@
-const users = require("../Model/Users");
-const vacancies = require("../Model/Vacancies");
+const users = require("../../Model/Users");
+const vacancies = require("../../Model/Vacancies");
 
 module.exports = async function (bot, message, user, vacancyId) {
   const userId = message.from.id;
@@ -10,7 +10,7 @@ module.exports = async function (bot, message, user, vacancyId) {
         user_id: userId,
       },
       {
-        step: `addVacancy#${vacancyId}#city`,
+        step: `addVacancy#${vacancyId}#phone`,
       }
     );
 
@@ -19,17 +19,23 @@ module.exports = async function (bot, message, user, vacancyId) {
         id: vacancyId,
       },
       {
-        age: message.text,
+        city: message.text,
       }
     );
 
     await bot.sendMessage(
       userId,
-      "🌐 Hudud: \n\nQaysi hududdansiz?\nViloyat nomi, Toshkent shahar yoki Respublikani kiriting.",
+      `📞 Aloqa : \n\nBog'lanish uchun raqamingizni kiriting?\nViloyat nomi, Toshkent shahar yoki Respublikani kiriting.`,
       {
         reply_markup: {
           resize_keyboard: true,
           keyboard: [
+            [
+              {
+                text: "Share Contact",
+                request_contact: true,
+              },
+            ],
             [
               {
                 text: "⬅️ Ortga",
@@ -41,6 +47,6 @@ module.exports = async function (bot, message, user, vacancyId) {
       }
     );
   } catch (err) {
-    console.log(err.toString());
+    console.log(err + "");
   }
 };

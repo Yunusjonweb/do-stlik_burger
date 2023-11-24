@@ -1,6 +1,6 @@
-const categories = require("../Model/Categories");
-const products = require("../Model/Product");
-const users = require("../Model/Users");
+const categories = require("../../Model/Categories");
+const products = require("../../Model/Product");
+const users = require("../../Model/Users");
 const ProductBasket = require("./ProductBasket");
 
 module.exports = async function (bot, message, user) {

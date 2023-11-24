@@ -1,11 +1,11 @@
-const users = require("../Model/Users");
+const users = require("../../Model/Users");
 const {
   reqCity,
   reqPhone,
   reqCode,
   incorrectCode,
   finishReg,
-} = require("./Texts");
+} = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   const userId = message.from.id;
@@ -187,25 +187,12 @@ module.exports = async function (bot, message, user) {
         return;
       }
 
-      await users.findOneAndUpdate(
-        {
-          user_id: userId,
-        },
-        {
-          phone_number: phoneText,
-        }
-      );
-
-      await users.findOneAndUpdate(
-        {
-          user_id: userId,
-        },
-        {
-          step: 4,
-          phone_number: phoneText,
-          code: code,
-        }
-      );
+      await users.findOneAndUpdate({
+        user_id: userId,
+        step: 4,
+        phone_number: phoneText,
+        code: code,
+      });
       let data = reqCode(user.lang);
       let keyboard = {
         inline_keyboard: [

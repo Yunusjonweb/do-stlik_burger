@@ -1,9 +1,9 @@
-const orders = require("../Model/Orders");
+const orders = require("../../Model/Orders");
+const users = require("../../Model/Users");
 
 module.exports = async function (bot, message, user, city) {
   try {
     const userId = message.from.id;
-
     const orderProducts = await orders.find();
     const orderText = getOrderText(orderProducts);
 
@@ -18,22 +18,15 @@ module.exports = async function (bot, message, user, city) {
         ],
       };
 
-      // const deliveryTime = calculateDeliveryTime(city);
-
-      // const messageToSend = `Sizning shahringiz: ${city}\nMaxsulotlar yetib borish vaqti: ${deliveryTime} daqiqa`;
-
-      await bot.sendMessage(userId, orderText, {
+      const sentMessage = await bot.sendMessage(userId, orderText, {
         parse_mode: "HTML",
         reply_markup: keyboard,
       });
-      // await bot.sendMessage(userId, messageToSend);
     }
   } catch (err) {
     console.log(err + "");
   }
 };
-
-// Qolgan funktsiyalar
 
 function getOrderText(orderProducts) {
   let orderText = "<b>🛒 Savatchada</b>:\n\n";

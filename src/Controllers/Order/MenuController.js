@@ -1,12 +1,10 @@
-const { MenuMsg } = require("./Texts");
+const { MenuMsg } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    const messageId = message?.message_id;
-    const text = message?.text;
 
-    const menuMsg = MenuMsg(user.lang); 
+    const menuMsg = MenuMsg(user.lang);
 
     const keyboard = {
       resize_keyboard: true,

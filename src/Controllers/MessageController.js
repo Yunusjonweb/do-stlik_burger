@@ -1,27 +1,27 @@
-const ad = require("../Admin/ad");
+const ad = require("../Admin/addPost");
 const admins = require("../Model/Admins");
 const users = require("../Model/Users");
 const vacancies = require("../Model/Vacancies");
-const checkController = require("./checkController");
-const CommentController = require("./CommentController");
-const CommentSave = require("./CommentSave");
-const DeleteVacancies = require("./DeleteVacancies");
-const Menu = require("./Menu");
-const MenuController = require("./MenuController");
-const OrdersController = require("./OrdersController");
-const reqLocationController = require("./reqLocationController");
-const SettingsController = require("./SettingsController");
+const checkController = require("./Order/checkController");
+const CommentController = require("./Comment/CommentController");
+const CommentSave = require("./Comment/CommentSave");
+const DeleteVacancies = require("../Controllers/Vacancies/DeleteVacancies");
+const Menu = require("./Product/Menu");
+const MenuController = require("./Order/MenuController");
+const OrdersController = require("./Orders/OrdersController");
+const reqLocationController = require("./Order/reqLocationController");
+const SettingsController = require("../Controllers/Settings/SettingsController");
 const { reqPhone, reqCode } = require("./Texts");
-const VacanciesController = require("./VacanciesController");
-const VacanciesSaveController = require("./VacanciesSaveController");
-const VacanciesUpdateAge = require("./VacanciesUpdateAge");
-const VacanciesUpdateCity = require("./VacanciesUpdateCity");
-const VacanciesUpdateDone = require("./VacanciesUpdateDone");
-const VacanciesUpdateGoal = require("./VacanciesUpdateGoal");
-const VacanciesUpdateName = require("./VacanciesUpdateName");
-const VacanciesUpdatePhone = require("./VacanciesUpdatePhone");
-const verAttributionController = require("./verAttributionController");
-const verLocationController = require("./verLocationController");
+const VacanciesController = require("./Vacancies/VacanciesController");
+const VacanciesSaveController = require("./Vacancies/VacanciesSaveController");
+const VacanciesUpdateAge = require("./Vacancies/VacanciesUpdateAge");
+const VacanciesUpdateName = require("./Vacancies/VacanciesUpdateName");
+const VacanciesUpdateCity = require("./Vacancies/VacanciesUpdateCity");
+const VacanciesUpdatePhone = require("./Vacancies/VacanciesUpdatePhone");
+const VacanciesUpdateGoal = require("./Vacancies/VacanciesUpdateGoal");
+const VacanciesUpdateDone = require("./Vacancies/VacanciesUpdateDone");
+const verAttributionController = require("./Orders/verAttributionController");
+const verLocationController = require("./Order/verLocationController");
 
 module.exports = async function (bot, message, user) {
   try {
@@ -132,30 +132,6 @@ module.exports = async function (bot, message, user) {
       text == "🛍 Buyurtmalarim"
     ) {
       await OrdersController(bot, message, user);
-      // bot.onText(/countdown ([0-9]+)/, (msg, match) => {
-      //   let count = parseInt(match[1]);
-      //   bot
-      //     .sendMessage(userId, `⏳ ${count.toString()} minut`)
-      //     .then((sentMessage) => {
-      //       const messageId = sentMessage.message_id;
-
-      //       const countdownInterval = setInterval(() => {
-      //         if (count > 0) {
-      //           count--;
-      //           bot.editMessageText(`⏳ ${count.toString()} minut qoldi...`, {
-      //             chat_id: userId,
-      //             message_id: messageId,
-      //           });
-      //         } else {
-      //           clearInterval(countdownInterval);
-      //           bot.editMessageText("⌛️ Countdown finished!", {
-      //             chat_id: userId,
-      //             message_id: messageId,
-      //           });
-      //         }
-      //       }, 60000);
-      //     });
-      // });
     } else if (user.step === "verAttribution") {
       await verAttributionController(bot, message, user);
     } else if (

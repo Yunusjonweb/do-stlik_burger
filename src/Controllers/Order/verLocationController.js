@@ -1,6 +1,6 @@
-const users = require("../Model/Users");
+const users = require("../../Model/Users");
 const reqLocationController = require("./reqLocationController");
-const startOrderController = require("./startOrderController");
+const startOrderController = require("../startOrderController");
 
 module.exports = async function (bot, message, user) {
   const userId = message.from.id;

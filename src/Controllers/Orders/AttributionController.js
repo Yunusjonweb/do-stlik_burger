@@ -1,5 +1,5 @@
-const users = require("../Model/Users");
-const { verAttribution } = require("./Texts");
+const users = require("../../Model/Users");
+const { verAttribution } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {

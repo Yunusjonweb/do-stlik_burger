@@ -107,17 +107,17 @@ module.exports = class Texts {
   static CommentStart(lang) {
     if (lang == "uz") {
       return {
-        text: "Fikr va mulohazalaringizni yuboring",
+        text: "📩 Fikr va mulohazalaringizni yuboring",
         btn: "⬅️ Ortga",
       };
     } else if (lang == "ru") {
       return {
-        text: "Отправьте свои мысли и отзывы",
+        text: "📩 Отправьте свои мысли и отзывы",
         btn: "⬅️ Назад",
       };
     } else if (lang == "eng") {
       return {
-        text: "Leave your commments",
+        text: "📩 Leave your commments",
         btn: "⬅️ Back",
       };
     }

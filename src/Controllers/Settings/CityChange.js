@@ -1,6 +1,6 @@
-const users = require("../Model/Users");
-const MenuController = require("./MenuController");
-const { CityChange } = require("./Texts");
+const users = require("../../Model/Users");
+const MenuController = require("../Order/MenuController");
+const { CityChange } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {

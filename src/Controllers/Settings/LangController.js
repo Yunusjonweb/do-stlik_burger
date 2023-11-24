@@ -1,4 +1,4 @@
-const users = require("../Model/Users");
+const users = require("../../Model/Users");
 
 module.exports = async function (bot, message, user) {
   try {

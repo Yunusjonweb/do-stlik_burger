@@ -1,4 +1,4 @@
-const { Settings } = require("./Texts");
+const { Settings } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {

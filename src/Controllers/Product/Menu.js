@@ -1,6 +1,6 @@
-const categories = require("../Model/Categories");
-const products = require("../Model/Product");
-const { Menu } = require("./Texts");
+const categories = require("../../Model/Categories");
+const products = require("../../Model/Product");
+const { Menu } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {

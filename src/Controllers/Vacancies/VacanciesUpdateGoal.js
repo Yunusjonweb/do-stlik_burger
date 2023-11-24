@@ -1,9 +1,8 @@
-const users = require("../Model/Users");
-const vacancies = require("../Model/Vacancies");
+const users = require("../../Model/Users");
+const vacancies = require("../../Model/Vacancies");
 
 module.exports = async function (bot, message, user, vacancyId) {
   const userId = message.from.id;
-  const text = message.text;
 
   try {
     await users.findOneAndUpdate(
@@ -11,7 +10,7 @@ module.exports = async function (bot, message, user, vacancyId) {
         user_id: userId,
       },
       {
-        step: `addVacancy#${vacancyId}#age`,
+        step: `addVacancy#${vacancyId}#goal`,
       }
     );
 
@@ -20,13 +19,13 @@ module.exports = async function (bot, message, user, vacancyId) {
         id: vacancyId,
       },
       {
-        name: text,
+        vacany: message.text,
       }
     );
 
     await bot.sendMessage(
       userId,
-      `🕑 Yosh: \n\n Yoshingizni kiriting?\n Masalan, 19`,
+      `🔎 <b>Maqsad</b>: \n\n Maqsadingizni qisqacha yozib bering.`,
       {
         reply_markup: {
           resize_keyboard: true,
@@ -42,6 +41,6 @@ module.exports = async function (bot, message, user, vacancyId) {
       }
     );
   } catch (err) {
-    console.log(err.toString());
+    console.log(err + "");
   }
 };

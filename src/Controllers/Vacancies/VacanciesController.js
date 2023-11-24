@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
-const users = require("../Model/Users");
-const vacancies = require("../Model/Vacancies");
-const { vacancyStart } = require("./Texts");
+const users = require("../../Model/Users");
+const vacancies = require("../../Model/Vacancies");
+const { vacancyStart } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {
@@ -37,6 +37,6 @@ module.exports = async function (bot, message, user) {
       reply_markup: replyKeyboard,
     });
   } catch (err) {
-    console.log(err.toString());
+    console.log(err + "");
   }
 };

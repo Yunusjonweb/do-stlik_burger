@@ -1,7 +1,6 @@
-const orders = require("../Model/Orders");
-const users = require("../Model/Users");
-const MenuController = require("./MenuController");
-const reqLocationController = require("./reqLocationController");
+const orders = require("../../Model/Orders");
+const users = require("../../Model/Users");
+const MenuController = require("../Order/MenuController");
 
 module.exports = async function (bot, message, user) {
   const userId = message.from.id;
@@ -11,9 +10,9 @@ module.exports = async function (bot, message, user) {
   try {
     if (["✅ Ha", "✅ Да", "✅ Yes"].includes(text)) {
       const orderProducts = await orders.find();
+      const userData = await users.findOne({ user_id: userId });
       const orderText = getOrderText(orderProducts);
 
-      const userData = await users.findOne({ user_id: userId });
       const userText = getUserText(userData, message);
 
       const messageText = userText + "\n\n" + orderText;
@@ -31,23 +30,65 @@ module.exports = async function (bot, message, user) {
         parse_mode: "HTML",
       });
 
+      if (userData.city === "Jizzax") {
+        let count = 20;
+        const messageId = message.message_id;
+        const sentMessage = await bot.sendMessage(
+          userId,
+          `⏳ ${count.toString()} minut`
+        );
+        const sentMessageId = sentMessage.message_id;
+
+        const countdownInterval = setInterval(() => {
+          if (count > 0) {
+            count--;
+            bot.editMessageText(
+              `⏳ Maxsulotni yetkazib berish vaqti: ${count.toString()} minut qoldi...`,
+              {
+                chat_id: userId,
+                message_id: sentMessageId,
+              }
+            );
+            bot.pinChatMessage(userId, sentMessageId);
+          } else {
+            clearInterval(countdownInterval);
+            bot.editMessageText("⌛️ Countdown finished!", {
+              chat_id: userId,
+              message_id: sentMessageId,
+            });
+            deleteDeliveredProducts(orderProducts);
+          }
+        }, 60000);
+      } else {
+        await bot.sendMessage(
+          userId,
+          "Sizning hududingizga yetkazib berish mavjud emas."
+        );
+      }
       await MenuController(bot, message, user);
     } else if (["❌ Yo'q", "❌ Нет", "❌ No"].includes(text)) {
       await users.findOneAndUpdate(
         {
           user_id: userId,
         },
-        { 
+        {
           step: "startOrder",
         }
       );
-
-      await reqLocationController(bot, message, user);
     }
   } catch (err) {
     console.log(err + "");
   }
 };
+
+async function deleteDeliveredProducts(orderProducts) {
+  try {
+    const deliveredProductIds = orderProducts.map((item) => item._id);
+    await orders.deleteMany({ _id: { $in: deliveredProductIds } });
+  } catch (err) {
+    console.log("Error deleting delivered products:", err + "");
+  }
+}
 
 function getOrderText(orderProducts) {
   let orderText = "<b>🛍 Buyurtma qilingan maxsulotlar</b>:\n\n";

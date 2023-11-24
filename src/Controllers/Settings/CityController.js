@@ -1,11 +1,10 @@
-const users = require("../Model/Users");
-const { CityList } = require("./Texts");
+const users = require("../../Model/Users");
+const { CityList } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
     const messageId = message.message.message_id;
-    const data = message.data;
 
     let keyboard = {
       inline_keyboard: [],

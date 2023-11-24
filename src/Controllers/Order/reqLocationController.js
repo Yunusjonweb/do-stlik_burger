@@ -1,12 +1,9 @@
-const users = require("../Model/Users");
-const MenuController = require("./MenuController");
-const { reqLocation } = require("./Texts");
+const users = require("../../Model/Users");
+const { reqLocation } = require("../Texts");
 
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    const text = message.text;
-    const messageId = message.message_id;
 
     await users.findOneAndUpdate(
       {

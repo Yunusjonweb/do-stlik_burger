@@ -1,5 +1,5 @@
-const users = require("../Model/Users");
-const vacancies = require("../Model/Vacancies");
+const users = require("../../Model/Users");
+const vacancies = require("../../Model/Vacancies");
 
 module.exports = async function (bot, message, user, vacancyId) {
   const userId = message.from.id;

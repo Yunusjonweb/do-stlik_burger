@@ -1,19 +1,19 @@
 const TelegramBot = require("node-telegram-bot-api");
 const { TOKEN } = require("../config");
-const SignUp = require("./Controllers/SignUp");
 const MessageController = require("./Controllers/MessageController");
 const mongo = require("./Model/mongo");
 const users = require("./Model/Users");
-const MenuController = require("./Controllers/MenuController");
-const LangController = require("./Controllers/LangController");
-const LangSave = require("./Controllers/LangSave");
-const CityController = require("./Controllers/CityController");
-const CityChange = require("./Controllers/CityChange");
-const PhoneController = require("./Controllers/PhoneController");
+const LangController = require("./Controllers/Settings/LangController");
+const LangSave = require("./Controllers/Settings/LangSave");
+const CityController = require("./Controllers/Settings/CityController");
+const CityChange = require("./Controllers/Settings/CityChange");
+const PhoneController = require("./Controllers/Settings/PhoneController");
 const admin = require("./Admin/admin");
-const Menu = require("./Controllers/Menu");
+const Menu = require("./Controllers/Product/Menu");
 const CallbackController = require("./Admin/Controllers/CallbackController");
-const AttributionController = require("./Controllers/AttributionController");
+const AttributionController = require("./Controllers/Orders/AttributionController");
+const SignUp = require("./Controllers/SignUp/SignUp");
+const MenuController = require("./Controllers/Order/MenuController");
 
 const bot = new TelegramBot(TOKEN, {
   polling: true,
