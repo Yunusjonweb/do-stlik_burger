@@ -18,7 +18,7 @@ module.exports = async function (bot, message, user) {
     if (!user) {
       user = await users.create({
         user_id: userId,
-        step: 1,
+        step: "1",
       });
 
       await bot.sendMessage(
@@ -55,7 +55,7 @@ module.exports = async function (bot, message, user) {
           reply_markup: langs,
         }
       );
-    } else if (user.step == 1) {
+    } else if (user.step == "1") {
       if (text == `🇺🇿 O'zbekcha`) {
         user = await users.findOneAndUpdate(
           {
@@ -63,7 +63,7 @@ module.exports = async function (bot, message, user) {
           },
           {
             lang: "uz",
-            step: 2,
+            step: "2",
           }
         );
         let data = reqCity("uz");
@@ -94,7 +94,7 @@ module.exports = async function (bot, message, user) {
           },
           {
             lang: "ru",
-            step: 2,
+            step: "2",
           }
         );
         let data = reqCity("ru");
@@ -125,7 +125,7 @@ module.exports = async function (bot, message, user) {
           },
           {
             lang: "eng",
-            step: 2,
+            step: "2",
           }
         );
         let data = reqCity("eng");
@@ -150,13 +150,13 @@ module.exports = async function (bot, message, user) {
           },
         });
       }
-    } else if (user.step == 2) {
+    } else if (user.step == "2") {
       await users.findOneAndUpdate(
         {
           user_id: userId,
         },
         {
-          step: 3,
+          step: "3",
           city: text,
         }
       );
@@ -176,7 +176,7 @@ module.exports = async function (bot, message, user) {
         },
         parse_mode: "HTML",
       });
-    } else if (user.step == 3) {
+    } else if (user.step == "3") {
       let code = ("" + Math.random()).substring(2, 7);
 
       if (!phoneNumberRegex.test(parseInt(phoneText))) {
@@ -187,12 +187,17 @@ module.exports = async function (bot, message, user) {
         return;
       }
 
-      await users.findOneAndUpdate({
-        user_id: userId,
-        step: 4,
-        phone_number: phoneText,
-        code: code,
-      });
+      await users.findOneAndUpdate(
+        {
+          user_id: userId,
+        },
+        {
+          step: "4",
+          phone_number: phoneText,
+          code: code,
+        }
+      );
+
       let data = reqCode(user.lang);
       let keyboard = {
         inline_keyboard: [
@@ -207,14 +212,14 @@ module.exports = async function (bot, message, user) {
       await bot.sendMessage(userId, data.text, {
         reply_markup: keyboard,
       });
-    } else if (user.step == 4) {
+    } else if (user.step == "4") {
       if (text == user.code) {
         await users.findOneAndUpdate(
           {
             user_id: userId,
           },
           {
-            step: 5,
+            step: "5",
           }
         );
         await bot.sendMessage(

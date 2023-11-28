@@ -1,5 +1,5 @@
-const admins = require("../../Model/Admins");
-const categories = require("../../Model/Categories");
+const admins = require("../../../Model/Admins");
+const categories = require("../../../Model/Categories");
 
 module.exports = async function (bot, message, admin, category_id) {
   try {

@@ -1,5 +1,5 @@
-const admins = require("../../Model/Admins");
-const products = require("../../Model/Product");
+const admins = require("../../../Model/Admins");
+const products = require("../../../Model/Product");
 
 module.exports = async function (bot, message, admin, productId) {
   try {
@@ -10,7 +10,7 @@ module.exports = async function (bot, message, admin, productId) {
         user_id: userId,
       },
       {
-        step: `addProduct#${productId}#price`,
+        step: `addProduct#${productId}#pic`,
       }
     );
 
@@ -19,11 +19,11 @@ module.exports = async function (bot, message, admin, productId) {
         id: productId,
       },
       {
-        name: message.text,
+        description: text,
       }
     );
 
-    await bot.sendMessage(userId, `<b>${text}</b>'ni narxi qancha?`, {
+    await bot.sendMessage(userId, "Mahsulot rasimni yuboring", {
       reply_markup: {
         resize_keyboard: true,
         keyboard: [

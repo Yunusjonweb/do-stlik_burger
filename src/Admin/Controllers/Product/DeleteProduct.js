@@ -1,7 +1,7 @@
 const { v4 } = require("uuid");
-const admins = require("../../Model/Admins");
-const products = require("../../Model/Product");
-const HomeController = require("./HomeController");
+const admins = require("../../../Model/Admins");
+const products = require("../../../Model/Product");
+const HomeController = require("../HomeController");
 
 module.exports = async function (bot, message, admin, productId) {
   try {

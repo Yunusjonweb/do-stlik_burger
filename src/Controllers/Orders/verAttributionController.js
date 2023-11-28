@@ -9,7 +9,7 @@ module.exports = async function (bot, message, user) {
 
   try {
     if (["✅ Ha", "✅ Да", "✅ Yes"].includes(text)) {
-      const orderProducts = await orders.find();
+      const orderProducts = await orders.find({ id: userId });
       const userData = await users.findOne({ user_id: userId });
       const orderText = getOrderText(orderProducts);
 
@@ -32,18 +32,14 @@ module.exports = async function (bot, message, user) {
 
       if (userData.city === "Jizzax") {
         let count = 20;
-        const messageId = message.message_id;
-        const sentMessage = await bot.sendMessage(
-          userId,
-          `⏳ ${count.toString()} minut`
-        );
+        const sentMessage = await bot.sendMessage(userId, `⏳ ${count} minut`);
         const sentMessageId = sentMessage.message_id;
 
         const countdownInterval = setInterval(() => {
           if (count > 0) {
             count--;
             bot.editMessageText(
-              `⏳ Maxsulotni yetkazib berish vaqti: ${count.toString()} minut qoldi...`,
+              `⏳ Maxsulotni yetkazib berish vaqti: ${count} minut qoldi...`,
               {
                 chat_id: userId,
                 message_id: sentMessageId,
@@ -93,11 +89,12 @@ async function deleteDeliveredProducts(orderProducts) {
 function getOrderText(orderProducts) {
   let orderText = "<b>🛍 Buyurtma qilingan maxsulotlar</b>:\n\n";
   orderProducts.forEach((item) => {
+    const itemTotalPrice = item.price * item.count;
     orderText += `<b>${item.count}</b> ✖️ ${
       item.name
     }\n⏰ <b>Vaqti</b> ${new Date(
       item.date
-    )}: \n<b>🧺 Maxsulotlar narxi:</b> ${formatPrice(item.totalPrice)}\n\n`;
+    )}: \n<b>🧺 Maxsulotlar narxi:</b> ${formatPrice(itemTotalPrice)}\n\n`;
   });
   orderText += `<b>🚚 Yetkazib berish:</b> ${formatPrice(9000)} \n`;
   orderText += `<b>💰 Jami:</b> <b>${formatPrice(
@@ -116,12 +113,16 @@ function getUserText(userData, message) {
 
 function getTotalPrice(orderProducts) {
   const totalPrice = orderProducts.reduce((total, item) => {
-    return total + item.count * item.totalPrice + item.delivery;
+    return total + item.count * item.price + item.delivery;
   }, 0);
   return totalPrice;
 }
 
 function formatPrice(price) {
+  if (typeof price === "undefined") {
+    return "N/A";
+  }
+
   const formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return formattedPrice + " so'm";
 }

@@ -22,6 +22,7 @@ const VacanciesUpdateGoal = require("./Vacancies/VacanciesUpdateGoal");
 const VacanciesUpdateDone = require("./Vacancies/VacanciesUpdateDone");
 const verAttributionController = require("./Orders/verAttributionController");
 const verLocationController = require("./Order/verLocationController");
+const orders = require("../Model/Orders");
 
 module.exports = async function (bot, message, user) {
   try {

@@ -1,6 +1,6 @@
 const MenuProduct = require("../../Controllers/Product/MenuProduct");
 const ProductBasket = require("../../Controllers/Product/ProductBasket");
-const MenuCategory = require("./MenuCategory");
+const MenuCategory = require("./Category/MenuCategory");
 
 module.exports = async function (bot, message, user) {
   try {

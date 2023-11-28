@@ -1,8 +1,8 @@
 const TelegramBot = require("node-telegram-bot-api");
 const { TOKEN } = require("../config");
+const users = require("./Model/Users");
 const MessageController = require("./Controllers/MessageController");
 const mongo = require("./Model/mongo");
-const users = require("./Model/Users");
 const LangController = require("./Controllers/Settings/LangController");
 const LangSave = require("./Controllers/Settings/LangSave");
 const CityController = require("./Controllers/Settings/CityController");

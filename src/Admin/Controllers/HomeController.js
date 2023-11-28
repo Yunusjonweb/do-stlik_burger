@@ -3,7 +3,6 @@ const admins = require("../../Model/Admins");
 module.exports = async function (bot, message, admin) {
   try {
     const userId = message.from.id;
-    const text = message.text;
     await admins.findOneAndUpdate(
       {
         user_id: userId,
@@ -27,6 +26,9 @@ module.exports = async function (bot, message, admin) {
         [
           {
             text: "👤 Foydalanuvchilari sonni",
+          },
+          {
+            text: "⚙️ Sozlamalar",
           },
         ],
       ],

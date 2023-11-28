@@ -15,34 +15,21 @@ module.exports = async function (bot, message, user) {
       id: productId,
     });
 
-    function calculateTotalPrice(quantity, unitPrice) {
-      var totalPrice = quantity * unitPrice + 9000;
-      return totalPrice;
-    }
-
     if (user?.step.split("#")[0] === "count") {
       await bot.deleteMessage(userId, messageId);
       let keyboard = {
         inline_keyboard: [],
       };
 
-      let productPrices = productSelect ? countId * productSelect.price : 0;
-      let totalPrices = calculateTotalPrice(countId, productSelect?.price);
-
-      function formatPrice(price) {
-        const formattedPrice = price
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        return formattedPrice + " so'm";
-      }
+      let totalPrices = getTotalPrice(countId, productSelect?.price);
 
       let text = `<b>🛒 Savatchada</b>:\n\n <b>${countId}</b> ✖️ ${
         productSelect?.name
-      }\n\n<b>🧺 Maxsulot narxi:</b> ${
+      }\n\n<b>🧺 Product price:</b> ${formatPrice(
         productSelect?.price
-      } so'm\n<b>🚚 Yetkazib berish:</b> 9000 so'm\n<b>💰 Jami:</b> <b>${formatPrice(
-        totalPrices
-      )} so'm</b>`;
+      )} soum\n<b>🚚 Delivery:</b> ${formatPrice(
+        9000
+      )} sum\n<b>💰 Total:</b> <b>${formatPrice(totalPrices)} soum</b>`;
 
       const existingOrder = await orders.findOneAndUpdate(
         {
@@ -51,7 +38,6 @@ module.exports = async function (bot, message, user) {
         },
         {
           $inc: { count: countId },
-          totalPrice: productPrices,
           date: currentDate,
         },
         { new: true }
@@ -63,7 +49,6 @@ module.exports = async function (bot, message, user) {
           name: productSelect?.name,
           price: productSelect?.price,
           pic: productSelect?.pic,
-          totalPrice: productPrices,
           count: countId,
           delivery: 9000,
           date: currentDate,
@@ -74,7 +59,7 @@ module.exports = async function (bot, message, user) {
         id: productId,
       });
 
-      let backData = product.id ? `product#${product.id}` : `menu`;
+      let backData = product.id ? `product#${product.id}` : "menu";
 
       keyboard.inline_keyboard.push([
         {
@@ -82,8 +67,8 @@ module.exports = async function (bot, message, user) {
           callback_data: backData,
         },
         {
-          text: "🔝 Davom etish",
-          callback_data: `menu`,
+          text: "🔝 Davaom etish",
+          callback_data: "menu",
         },
       ]);
 
@@ -105,3 +90,13 @@ module.exports = async function (bot, message, user) {
     console.log(err + "");
   }
 };
+
+function getTotalPrice(count, price) {
+  const totalPrice = (count || 0) * (price || 0) + 9000;
+  return totalPrice;
+}
+
+function formatPrice(price) {
+  const formattedPrice = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return formattedPrice + " so'm";
+}

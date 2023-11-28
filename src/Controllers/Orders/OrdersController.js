@@ -1,13 +1,12 @@
 const orders = require("../../Model/Orders");
-const users = require("../../Model/Users");
 
-module.exports = async function (bot, message, user, city) {
+module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    const orderProducts = await orders.find();
-    const orderText = getOrderText(orderProducts);
+    const order = await orders.find({ id: userId });
+    const orderText = getOrderText(order);
 
-    if (orderProducts.length === 0) {
+    if (order.length === 0) {
       await bot.sendMessage(userId, "🛍 Savatchada maxsulot yo'q.", {
         parse_mode: "HTML",
       });
@@ -18,7 +17,7 @@ module.exports = async function (bot, message, user, city) {
         ],
       };
 
-      const sentMessage = await bot.sendMessage(userId, orderText, {
+      await bot.sendMessage(userId, orderText, {
         parse_mode: "HTML",
         reply_markup: keyboard,
       });
@@ -31,11 +30,12 @@ module.exports = async function (bot, message, user, city) {
 function getOrderText(orderProducts) {
   let orderText = "<b>🛒 Savatchada</b>:\n\n";
   orderProducts.forEach((item) => {
+    const itemTotalPrice = item.price * item.count;
     orderText += `<b>${item.count}</b> ✖️ ${
       item.name
     }\n⏰ <b>Vaqti:</b> ${new Date(
       item.date
-    )}\n<b>🧺 Maxsulotlar narxi:</b> ${formatPrice(item.totalPrice)}\n\n`;
+    )}\n<b>🧺 Maxsulotlar narxi:</b> ${formatPrice(itemTotalPrice)}\n\n`;
   });
   orderText += `<b>🚚 Yetkazib berish:</b> ${formatPrice(9000)}\n`;
   orderText += `<b>💰 Jami:</b> <b>${formatPrice(
@@ -46,7 +46,7 @@ function getOrderText(orderProducts) {
 
 function getTotalPrice(orderProducts) {
   const totalPrice = orderProducts.reduce(
-    (total, item) => total + item.count * item.totalPrice + item.delivery,
+    (total, item) => total + item?.count * item?.price + item?.delivery,
     0
   );
   return totalPrice;

@@ -23,10 +23,12 @@ module.exports = async function (bot, message, user) {
       ],
     };
 
-    keyboard.inline_keyboard[0].push({
-      text: categoryList[0].name,
-      callback_data: `category#${categoryList[0].id}`,
-    });
+    if (categoryList.length > 0) {
+      keyboard.inline_keyboard[0].push({
+        text: categoryList[0].name,
+        callback_data: `category#${categoryList[0].id}`,
+      });
+    }
 
     let total = [...categoryList, ...productList];
 
@@ -41,8 +43,8 @@ module.exports = async function (bot, message, user) {
       if (total[i + 1]) {
         newRow.push({
           text: total[i + 1].name,
-          callback_data: `${total[i].price ? "product" : "category"}#${
-            total[i].id
+          callback_data: `${total[i + 1].price ? "product" : "category"}#${
+            total[i + 1].id
           }`,
         });
       }

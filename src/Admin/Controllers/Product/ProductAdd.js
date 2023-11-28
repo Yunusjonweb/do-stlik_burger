@@ -1,5 +1,5 @@
-const categories = require("../../Model/Categories");
-const products = require("../../Model/Product");
+const categories = require("../../../Model/Categories");
+const products = require("../../../Model/Product");
 
 module.exports = async function (bot, message, admin, categoryId) {
   try {

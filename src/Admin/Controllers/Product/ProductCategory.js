@@ -1,5 +1,5 @@
-const admins = require("../../Model/Admins");
-const categories = require("../../Model/Categories");
+const admins = require("../../../Model/Admins");
+const categories = require("../../../Model/Categories");
 
 module.exports = async function (bot, message, admin) {
   try {
@@ -7,14 +7,13 @@ module.exports = async function (bot, message, admin) {
     const text = message.text;
 
     let categoryId = admin.step.split("#")[2];
-    categoryId = categoryId == "all" ? undefined : categoryId;
+    categoryId = categoryId === "all" ? undefined : categoryId;
 
     let category = await categories.findOne({
       name: text,
-      category_id: categoryId,
     });
 
-    if (category) {
+    if (category !== null) {
       await admins.findOneAndUpdate(
         {
           user_id: userId,

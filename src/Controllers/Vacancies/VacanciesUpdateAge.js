@@ -10,7 +10,7 @@ module.exports = async function (bot, message, user, vacancyId) {
 
     await users.findOneAndUpdate({ user_id: userId }, { step });
 
-    await vacancies.findOneAndUpdate({ id: vacancyId }, { city: text });
+    await vacancies.findOneAndUpdate({ id: vacancyId }, { age: text });
 
     await bot.sendMessage(
       userId,

@@ -1,6 +1,6 @@
-const admins = require("../../Model/Admins");
-const categories = require("../../Model/Categories");
-const HomeController = require("./HomeController");
+const admins = require("../../../Model/Admins");
+const categories = require("../../../Model/Categories");
+const HomeController = require("../HomeController");
 const ProductAdd = require("./ProductAdd");
 
 module.exports = async (bot, message, admin) => {

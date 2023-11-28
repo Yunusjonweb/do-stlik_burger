@@ -1,4 +1,4 @@
-const admins = require("../../Model/Admins");
+const admins = require("../../../Model/Admins");
 
 module.exports = async function (bot, message, admin, categoryId) {
   try {

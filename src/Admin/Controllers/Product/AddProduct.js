@@ -1,6 +1,6 @@
 const { v4 } = require("uuid");
-const admins = require("../../Model/Admins");
-const products = require("../../Model/Product");
+const admins = require("../../../Model/Admins");
+const products = require("../../../Model/Product");
 
 module.exports = async function (bot, message, admin, categoryId) {
   try {
