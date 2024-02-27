@@ -32,7 +32,7 @@ module.exports = async function (bot, message, user) {
 
     let total = [...categoryList, ...productList];
 
-    for (let i = 1; i < total.length; i += 2) {
+    for (let i = 1; i < total.length; i += 3) {
       let newRow = [];
       newRow.push({
         text: total[i].name,

@@ -1,13 +1,12 @@
 const categories = require("../../Model/Categories");
 const products = require("../../Model/Product");
 const users = require("../../Model/Users");
-const ProductBasket = require("./ProductBasket");
 
 module.exports = async function (bot, message, user) {
   try {
     const userId = message.from.id;
-    const messageId = message.message.message_id;
     const data = message.data;
+    const messageId = message.message.message_id;
 
     const type = data.split("#")[0];
     const id = data.split("#")[1];
@@ -77,6 +76,7 @@ module.exports = async function (bot, message, user) {
       parse_mode: "HTML",
       reply_markup: keyboard,
       caption: productCaption,
+      disable_notification: true,
     });
   } catch (err) {
     console.log(err + "");

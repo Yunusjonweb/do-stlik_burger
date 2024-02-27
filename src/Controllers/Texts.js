@@ -350,6 +350,7 @@ module.exports = class Texts {
       };
     }
   }
+
   static Menu(lang) {
     if (lang == "uz") {
       return "Kategoriyalardan birini tanlang";

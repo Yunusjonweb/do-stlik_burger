@@ -26,9 +26,9 @@ module.exports = async function (bot, message, admin, productId) {
       {
         price,
       }
-    );
+    );  
 
-    await bot.sendMessage(userId, "Mahsulot haqida malumot kiriting", {
+    await bot.sendMessage(userId, "🛠 Kurs haqida malumot kiriting", {
       reply_markup: {
         resize_keyboard: true,
         keyboard: [

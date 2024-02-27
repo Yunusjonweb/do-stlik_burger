@@ -48,7 +48,7 @@ module.exports = async function (bot, message, user) {
             bot.pinChatMessage(userId, sentMessageId);
           } else {
             clearInterval(countdownInterval);
-            bot.editMessageText("⌛️ Countdown finished!", {
+            bot.editMessageText("⌛️ Countdown tugadi!", {
               chat_id: userId,
               message_id: sentMessageId,
             });
@@ -82,7 +82,7 @@ async function deleteDeliveredProducts(orderProducts) {
     const deliveredProductIds = orderProducts.map((item) => item._id);
     await orders.deleteMany({ _id: { $in: deliveredProductIds } });
   } catch (err) {
-    console.log("Error deleting delivered products:", err + "");
+    console.log("Yetkazib berilgan maxsulotlarni o'chirishda xato:", err + "");
   }
 }
 

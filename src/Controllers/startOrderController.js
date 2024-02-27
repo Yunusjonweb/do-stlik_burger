@@ -36,7 +36,7 @@ module.exports = async function (bot, message, user) {
     };
 
     await bot.sendMessage(userId, msg.text, {
-      reply_markup: keyboard,
+      reply_markup: keyboard, 
     });
   } catch (err) {
     console.log(err + "");

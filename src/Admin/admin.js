@@ -11,7 +11,7 @@ module.exports = async function admin() {
   bot.on("message", async (message) => {
     const userId = message.from.id;
     bot
-      .getChatMember(-1001951018246, userId)
+      .getChatMember(-1001055685828, userId)
       .then((response) => {
         const status = response.status;
         if (status === "left" || status === "kicked") {
