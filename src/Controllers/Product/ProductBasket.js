@@ -25,11 +25,11 @@ module.exports = async function (bot, message, user) {
 
       let text = `<b>🛒 Savatchada</b>:\n\n <b>${countId}</b> ✖️ ${
         productSelect?.name
-      }\n\n<b>🧺 Product price:</b> ${formatPrice(
+      }\n\n<b>🧺 Maxsulot narxi:</b> ${formatPrice(
         productSelect?.price
-      )} soum\n<b>🚚 Delivery:</b> ${formatPrice(
+      )} soum\n<b>🚚 Yetkazib berish:</b> ${formatPrice(
         9000
-      )} sum\n<b>💰 Total:</b> <b>${formatPrice(totalPrices)} soum</b>`;
+      )} so'm\n<b>💰 Jami:</b> <b>${formatPrice(totalPrices)} so'm</b>`;
 
       const existingOrder = await orders.findOneAndUpdate(
         {
