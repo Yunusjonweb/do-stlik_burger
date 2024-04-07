@@ -1,4 +1,6 @@
 const users = require("../../Model/Users");
+const MessageController = require("../MessageController");
+const MenuController = require("../Order/MenuController");
 const {
   reqCity,
   reqPhone,
@@ -204,7 +206,7 @@ module.exports = async function (bot, message, user) {
           [
             {
               text: data.btn,
-              callback_data: `code-again`,  
+              callback_data: `code-again`,
             },
           ],
         ],
@@ -220,12 +222,15 @@ module.exports = async function (bot, message, user) {
           },
           {
             step: "5",
+            isFullyRegistered: true,
           }
         );
         await bot.sendMessage(
           userId,
           finishReg(user.lang, message.from.first_name)
         );
+        await MenuController(bot, message, user);
+        await MessageController(bot, message, user);
       } else {
         await bot.sendMessage(userId, incorrectCode(user.lang));
       }
